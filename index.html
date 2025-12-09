@@ -145,6 +145,50 @@
             transform: scale(0.95);
         }
 
+        /* Services Section */
+        .services-section {
+            margin: 0 20px 20px;
+            background: #fff;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .service-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .service-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .service-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .service-item i {
+            color: var(--secondary-color);
+            margin-right: 10px;
+            font-size: 12px;
+        }
+
+        .tagline {
+            text-align: center;
+            font-size: 13px;
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-top: 15px;
+            font-style: italic;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
         /* Contact List */
         .details-card {
             background: #fff;
@@ -333,6 +377,14 @@
             <!-- Actions will be injected here -->
         </div>
 
+        <div class="services-section" id="services-container" style="display: none;">
+            <h3 class="section-title">Our Services</h3>
+            <ul class="service-list" id="service-list">
+                <!-- Services injected here -->
+            </ul>
+            <div class="tagline" id="tagline"></div>
+        </div>
+
         <div class="details-card">
             <div class="contact-item">
                 <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
@@ -435,6 +487,27 @@
                 btn.innerHTML = `<i class="${link.icon}"></i>`;
                 actionsContainer.appendChild(btn);
             });
+
+            // Services
+            const servicesContainer = document.getElementById('services-container');
+            const serviceList = document.getElementById('service-list');
+            const tagline = document.getElementById('tagline');
+
+            if (data.services && data.services.length > 0) {
+                servicesContainer.style.display = 'block';
+                data.services.forEach(service => {
+                    const li = document.createElement('li');
+                    li.className = 'service-item';
+                    li.innerHTML = `<i class="fas fa-check-circle"></i> ${service}`;
+                    serviceList.appendChild(li);
+                });
+            }
+
+            if (data.tagline) {
+                tagline.textContent = data.tagline;
+            } else {
+                tagline.style.display = 'none';
+            }
 
             // Associates
             const associatesContainer = document.getElementById('associates-container');
