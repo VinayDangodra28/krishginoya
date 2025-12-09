@@ -503,7 +503,7 @@
         });
 
         function renderCard(data) {
-            const p = data.personalInfo;
+            const f = data.firmInfo;
             
             // Theme Colors
             if (data.theme) {
@@ -513,13 +513,13 @@
             }
 
             // Header Info
-            document.getElementById('company-name').textContent = p.company;
-            document.getElementById('company-subtitle').textContent = p.companySubtitle;
+            document.getElementById('company-name').textContent = f.name;
+            document.getElementById('company-subtitle').textContent = f.subtitle;
             
             // Logo
             const logoImg = document.getElementById('company-logo');
-            if (p.logoUrl) {
-                logoImg.src = p.logoUrl;
+            if (f.logoUrl) {
+                logoImg.src = f.logoUrl;
             } else {
                 logoImg.style.display = 'none';
             }
@@ -527,20 +527,16 @@
             // Team Section
             const teamContainer = document.getElementById('team-container');
             
-            // Add Krish
-            addTeamMember(teamContainer, p.name, p.designation, p.phone);
-
-            // Add Associates
-            if (data.associates) {
-                data.associates.forEach(assoc => {
-                    addTeamMember(teamContainer, assoc.name, "Associate", assoc.phone);
+            if (data.team) {
+                data.team.forEach(member => {
+                    addTeamMember(teamContainer, member.name, member.phone);
                 });
             }
             
-            document.getElementById('email-display').textContent = p.email;
-            document.getElementById('email-link').href = `mailto:${p.email}`;
+            document.getElementById('email-display').textContent = f.email;
+            document.getElementById('email-link').href = `mailto:${f.email}`;
             
-            document.getElementById('address-display').textContent = p.address;
+            document.getElementById('address-display').textContent = f.address;
             
             // Social Actions
             const actionsContainer = document.getElementById('social-actions');
@@ -578,24 +574,22 @@
             // VCF Generation
             let vcardData = `BEGIN:VCARD
 VERSION:3.0
-N:Ginoya;Krish;;CA;
-FN:${p.name}
-ORG:${p.company}
-TITLE:${p.designation}
-TEL;TYPE=WORK,VOICE:${p.phone}
+N:;${f.name};;;
+FN:${f.name}
+ORG:${f.name}
+EMAIL:${f.email}
+ADR;TYPE=WORK:;;${f.address.replace(/,/g, ';')};;;;
+URL:${f.website || ''}
 `;
 
-            // Add Associates to VCF
-            if (data.associates) {
-                data.associates.forEach(assoc => {
-                    vcardData += `TEL;TYPE=WORK,VOICE;X-LABEL=${assoc.name}:${assoc.phone}\n`;
+            // Add all team members as phone numbers with labels
+            if (data.team) {
+                data.team.forEach(member => {
+                    vcardData += `TEL;TYPE=WORK,VOICE;X-LABEL=${member.name}:${member.phone}\n`;
                 });
             }
 
-            vcardData += `EMAIL:${p.email}
-ADR;TYPE=WORK:;;${p.address.replace(/,/g, ';')};;;;
-URL:${p.website || ''}
-END:VCARD`;
+            vcardData += `END:VCARD`;
 
             const blob = new Blob([vcardData], { type: 'text/vcard' });
             const url = URL.createObjectURL(blob);
@@ -618,7 +612,7 @@ END:VCARD`;
             };
         }
 
-        function addTeamMember(container, name, designation, phone) {
+        function addTeamMember(container, name, phone) {
             const card = document.createElement('div');
             card.className = 'team-card';
             card.innerHTML = `
@@ -626,7 +620,6 @@ END:VCARD`;
                     <div class="team-avatar"><i class="fas fa-user"></i></div>
                     <div class="team-details">
                         <h4>${name}</h4>
-                        <p>${designation}</p>
                         <a href="tel:${phone.replace(/\s+/g, '')}">${phone}</a>
                     </div>
                 </div>
