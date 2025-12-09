@@ -20,7 +20,7 @@
     {
       "platform": "Call",
       "url": "tel:+919624115765",
-      "icon": "fas fa-phone-flip",
+      "icon": "fa-solid fa-phone",
       "color": "#1F3A60"
     },
     {
