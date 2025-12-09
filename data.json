@@ -36,6 +36,12 @@
       "color": "#EA4335"
     },
     {
+      "platform": "LinkedIn",
+      "url": "https://www.linkedin.com/in/krishginoya/",
+      "icon": "fab fa-linkedin-in",
+      "color": "#0077b5"
+    },
+    {
       "platform": "Location",
       "url": "https://maps.google.com/?q=912, Krunesh Business Centre, Surat",
       "icon": "fas fa-map-marker-alt",
