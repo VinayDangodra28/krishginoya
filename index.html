@@ -120,24 +120,25 @@
         .actions {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            padding: 0 20px;
+            gap: 10px;
+            padding: 0 15px;
             margin-bottom: 30px;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
         }
 
         .action-btn {
-            width: 55px;
-            height: 55px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             text-decoration: none;
             color: #fff;
-            font-size: 22px;
+            font-size: 20px;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            flex-shrink: 0;
         }
 
         .action-btn:active {
