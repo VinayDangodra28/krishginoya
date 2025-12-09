@@ -352,99 +352,76 @@
             z-index: 1000;
         }
 
-        /* Modal */
-        .modal {
-            display: none; 
-            position: fixed; 
-            z-index: 2000; 
-            left: 0;
-            top: 0;
-            width: 100%; 
-            height: 100%; 
-            background-color: rgba(0,0,0,0.5); 
-            align-items: center;
-            justify-content: center;
+        /* Team Section */
+        .team-section {
+            margin: 0 20px 20px;
         }
 
-        .modal-content {
-            background-color: #fff;
-            padding: 25px 20px;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 320px;
-            text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            position: relative;
-            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        @keyframes popIn {
-            from {transform: scale(0.8); opacity: 0;}
-            to {transform: scale(1); opacity: 1;}
-        }
-
-        .modal-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            color: #999;
-            font-size: 24px;
-            cursor: pointer;
-            line-height: 1;
-        }
-
-        .call-option {
+        .team-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 15px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 12px;
-            text-decoration: none;
-            color: var(--text-color);
             border: 1px solid #eee;
-            transition: all 0.2s;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
         }
 
-        .call-option:active {
-            background: #e9ecef;
-            transform: scale(0.98);
+        .team-info {
+            display: flex;
+            align-items: center;
         }
 
-        .call-info {
-            text-align: left;
-        }
-
-        .call-name {
-            font-weight: 600;
-            font-size: 15px;
-            display: block;
-            margin-bottom: 2px;
-        }
-
-        .call-number {
-            font-size: 13px;
-            color: #666;
-        }
-
-        .call-icon {
-            width: 35px;
-            height: 35px;
-            background: rgba(124, 179, 66, 0.1);
-            color: var(--secondary-color);
+        .team-avatar {
+            width: 45px;
+            height: 45px;
+            background: var(--primary-color);
+            color: #fff;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
+            margin-right: 15px;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .team-details h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 2px;
+        }
+
+        .team-details p {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-bottom: 2px;
+        }
+        
+        .team-details a {
+            font-size: 13px;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .call-btn-small {
+            width: 35px;
+            height: 35px;
+            background-color: var(--secondary-color);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 14px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            flex-shrink: 0;
+            margin-left: 10px;
         }
     </style>
 </head>
@@ -463,18 +440,13 @@
             <div class="company-subtitle" id="company-subtitle"></div>
         </header>
 
-        <div class="profile-info">
-            <h1 class="name" id="person-name"></h1>
-            <span class="designation" id="person-designation"></span>
-        </div>
-
-        <div class="actions" id="social-actions">
+        <div class="actions" id="social-actions" style="margin-top: 20px;">
             <!-- Actions will be injected here -->
         </div>
 
-        <div class="associate-section" id="associates-container">
-            <h3 class="section-title">Associates</h3>
-            <!-- Associates injected here -->
+        <div class="team-section" id="team-container">
+            <h3 class="section-title">Key Contacts</h3>
+            <!-- Team members injected here -->
         </div>
 
         <div class="services-section" id="services-container" style="display: none;">
@@ -486,14 +458,6 @@
         </div>
 
         <div class="details-card">
-            <div class="contact-item">
-                <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
-                <div class="contact-details">
-                    <h4>Mobile</h4>
-                    <div id="phone-list"></div>
-                </div>
-            </div>
-
             <div class="contact-item">
                 <div class="contact-icon"><i class="fas fa-envelope"></i></div>
                 <div class="contact-details">
@@ -511,11 +475,6 @@
             </div>
         </div>
 
-        <div class="associate-section" id="associates-container">
-            <h3 class="section-title">Associates</h3>
-            <!-- Associates injected here -->
-        </div>
-
         <footer class="footer">
             <a href="#" class="save-btn" id="save-contact-btn">
                 <i class="fas fa-user-plus"></i> Add to Contacts
@@ -526,17 +485,6 @@
         <button id="share-btn" class="share-fab">
             <i class="fas fa-share-alt"></i>
         </button>
-
-        <!-- Call Modal -->
-        <div id="call-modal" class="modal">
-            <div class="modal-content">
-                <span class="close-modal" id="close-modal">&times;</span>
-                <h3 class="modal-title">Call</h3>
-                <div id="call-options">
-                    <!-- Options injected here -->
-                </div>
-            </div>
-        </div>
     </div>
 
     <script>
@@ -567,8 +515,6 @@
             // Header Info
             document.getElementById('company-name').textContent = p.company;
             document.getElementById('company-subtitle').textContent = p.companySubtitle;
-            document.getElementById('person-name').textContent = p.name;
-            document.getElementById('person-designation').textContent = p.designation;
             
             // Logo
             const logoImg = document.getElementById('company-logo');
@@ -578,26 +524,16 @@
                 logoImg.style.display = 'none';
             }
 
-            // Contact Info - Phone List
-            const phoneList = document.getElementById('phone-list');
-            phoneList.innerHTML = ''; // Clear existing
+            // Team Section
+            const teamContainer = document.getElementById('team-container');
             
             // Add Krish
-            const pLink = document.createElement('a');
-            pLink.href = `tel:${p.phone.replace(/\s+/g, '')}`;
-            pLink.style.display = 'block';
-            pLink.style.marginBottom = '5px';
-            pLink.innerHTML = `${p.phone} <span style="font-size: 12px; color: #999;">(Krish)</span>`;
-            phoneList.appendChild(pLink);
+            addTeamMember(teamContainer, p.name, p.designation, p.phone);
 
-            // Add Associates to Phone List
+            // Add Associates
             if (data.associates) {
                 data.associates.forEach(assoc => {
-                    const aLink = document.createElement('a');
-                    aLink.href = `tel:${assoc.phone.replace(/\s+/g, '')}`;
-                    aLink.style.display = 'block';
-                    aLink.innerHTML = `${assoc.phone} <span style="font-size: 12px; color: #999;">(${assoc.name.split(' ')[0]})</span>`;
-                    phoneList.appendChild(aLink);
+                    addTeamMember(teamContainer, assoc.name, "Associate", assoc.phone);
                 });
             }
             
@@ -605,24 +541,14 @@
             document.getElementById('email-link').href = `mailto:${p.email}`;
             
             document.getElementById('address-display').textContent = p.address;
-
+            
             // Social Actions
             const actionsContainer = document.getElementById('social-actions');
             data.socialLinks.forEach(link => {
                 const btn = document.createElement('a');
                 btn.className = 'action-btn';
-                
-                if (link.platform === 'Call') {
-                    btn.href = '#';
-                    btn.onclick = (e) => {
-                        e.preventDefault();
-                        openCallModal(data);
-                    };
-                } else {
-                    btn.href = link.url;
-                    btn.target = '_blank';
-                }
-                
+                btn.href = link.url;
+                btn.target = '_blank';
                 btn.style.backgroundColor = link.color || data.theme.primaryColor;
                 btn.innerHTML = `<i class="${link.icon}"></i>`;
                 actionsContainer.appendChild(btn);
@@ -647,26 +573,6 @@
                 tagline.textContent = data.tagline;
             } else {
                 tagline.style.display = 'none';
-            }
-
-            // Associates
-            const associatesContainer = document.getElementById('associates-container');
-            if (data.associates && data.associates.length > 0) {
-                data.associates.forEach(assoc => {
-                    const item = document.createElement('div');
-                    item.className = 'associate-card';
-                    item.innerHTML = `
-                        <div class="associate-avatar"><i class="fas fa-user"></i></div>
-                        <div class="contact-details">
-                            <h4>Associate</h4>
-                            <p style="font-weight: 600; margin-bottom: 2px;">${assoc.name}</p>
-                            <a href="tel:${assoc.phone.replace(/\s+/g, '')}" style="color: var(--secondary-color); font-size: 13px;">${assoc.phone}</a>
-                        </div>
-                    `;
-                    associatesContainer.appendChild(item);
-                });
-            } else {
-                associatesContainer.style.display = 'none';
             }
 
             // VCF Generation
@@ -710,54 +616,25 @@ END:VCARD`;
                     prompt('Copy this link to share:', window.location.href);
                 }
             };
-
-            // Modal Logic
-            const modal = document.getElementById('call-modal');
-            const closeBtn = document.getElementById('close-modal');
-            
-            closeBtn.onclick = () => {
-                modal.style.display = 'none';
-            }
-            
-            window.onclick = (event) => {
-                if (event.target == modal) {
-                    modal.style.display = 'none';
-                }
-            }
         }
 
-        function openCallModal(data) {
-            const modal = document.getElementById('call-modal');
-            const optionsContainer = document.getElementById('call-options');
-            optionsContainer.innerHTML = '';
-
-            // Add Krish
-            addCallOption(optionsContainer, data.personalInfo.name, data.personalInfo.phone);
-
-            // Add Associates
-            if (data.associates) {
-                data.associates.forEach(assoc => {
-                    addCallOption(optionsContainer, assoc.name, assoc.phone);
-                });
-            }
-
-            modal.style.display = 'flex';
-        }
-
-        function addCallOption(container, name, phone) {
-            const a = document.createElement('a');
-            a.className = 'call-option';
-            a.href = `tel:${phone.replace(/\s+/g, '')}`;
-            a.innerHTML = `
-                <div class="call-info">
-                    <span class="call-name">${name}</span>
-                    <span class="call-number">${phone}</span>
+        function addTeamMember(container, name, designation, phone) {
+            const card = document.createElement('div');
+            card.className = 'team-card';
+            card.innerHTML = `
+                <div class="team-info">
+                    <div class="team-avatar"><i class="fas fa-user"></i></div>
+                    <div class="team-details">
+                        <h4>${name}</h4>
+                        <p>${designation}</p>
+                        <a href="tel:${phone.replace(/\s+/g, '')}">${phone}</a>
+                    </div>
                 </div>
-                <div class="call-icon">
+                <a href="tel:${phone.replace(/\s+/g, '')}" class="call-btn-small">
                     <i class="fas fa-phone"></i>
-                </div>
+                </a>
             `;
-            container.appendChild(a);
+            container.appendChild(card);
         }
     </script>
 </body>

@@ -27,12 +27,6 @@
   "tagline": "Solutions with professionalism and integrity.",
   "socialLinks": [
     {
-      "platform": "Call",
-      "url": "tel:+919624115765",
-      "icon": "fa-solid fa-phone",
-      "color": "#1F3A60"
-    },
-    {
       "platform": "WhatsApp",
       "url": "https://wa.me/919624115765",
       "icon": "fab fa-whatsapp",
