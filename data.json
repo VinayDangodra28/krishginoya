@@ -1,0 +1,52 @@
+﻿{
+  "personalInfo": {
+    "name": "CA Krish Ginoya",
+    "designation": "Chartered Accountant",
+    "company": "K R GINOYA & ASSOCIATES",
+    "companySubtitle": "CHARTERED ACCOUNTANTS",
+    "phone": "+91 96241 15765",
+    "email": "cakrishginoya@gmail.com",
+    "website": "",
+    "address": "912, Krunesh Business Centre (KBC - 1), Opp. Abhishek Arcade, Yogichowk, Surat. 395010",
+    "logoUrl": "./CAIndiaLogo.png"
+  },
+  "associates": [
+    {
+      "name": "Sagar Chavda",
+      "phone": "+91 95376 13576"
+    }
+  ],
+  "socialLinks": [
+    {
+      "platform": "Call",
+      "url": "tel:+919624115765",
+      "icon": "fas fa-phone-flip",
+      "color": "#1F3A60"
+    },
+    {
+      "platform": "WhatsApp",
+      "url": "https://wa.me/919624115765",
+      "icon": "fab fa-whatsapp",
+      "color": "#25D366"
+    },
+    {
+      "platform": "Email",
+      "url": "mailto:cakrishginoya@gmail.com",
+      "icon": "fas fa-envelope",
+      "color": "#EA4335"
+    },
+    {
+      "platform": "Location",
+      "url": "https://maps.google.com/?q=912, Krunesh Business Centre, Surat",
+      "icon": "fas fa-map-marker-alt",
+      "color": "#4285F4"
+    }
+  ],
+  "theme": {
+    "primaryColor": "#1F3A60",
+    "secondaryColor": "#7CB342",
+    "backgroundColor": "#f4f7f6",
+    "cardColor": "#ffffff",
+    "textColor": "#2c3e50"
+  }
+}

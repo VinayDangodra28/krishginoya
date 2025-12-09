@@ -1,0 +1,493 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CA Krish Ginoya - VCard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1F3A60;
+            --secondary-color: #7CB342;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #2c3e50;
+            --shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
+            background-color: var(--card-bg);
+            box-shadow: var(--shadow);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            margin: 0 15px;
+        }
+
+        /* Header Section */
+        .header {
+            background: linear-gradient(135deg, #ffffff 0%, #f9f9f9 100%);
+            padding: 40px 20px 20px;
+            text-align: center;
+            position: relative;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .logo-container {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            padding: 15px;
+        }
+
+        .logo-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .company-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            line-height: 1.4;
+        }
+
+        .company-subtitle {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--secondary-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Profile Info */
+        .profile-info {
+            text-align: center;
+            padding: 20px 20px 10px;
+        }
+
+        .name {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 5px;
+        }
+
+        .designation {
+            font-size: 15px;
+            color: #7f8c8d;
+            font-weight: 400;
+            margin-bottom: 25px;
+            display: inline-block;
+            background: #f0f2f5;
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+
+        /* Action Buttons */
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 0 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #fff;
+            font-size: 22px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .action-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Contact List */
+        .details-card {
+            background: #fff;
+            margin: 0 20px 20px;
+            border-radius: 15px;
+            padding: 5px 0;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .contact-item:last-child {
+            border-bottom: none;
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(31, 58, 96, 0.05);
+            color: var(--primary-color);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .contact-details {
+            flex: 1;
+        }
+
+        .contact-details h4 {
+            font-size: 11px;
+            color: #95a5a6;
+            margin-bottom: 2px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .contact-details p, .contact-details a {
+            font-size: 14px;
+            color: var(--text-color);
+            font-weight: 500;
+            text-decoration: none;
+            line-height: 1.4;
+            display: block;
+        }
+
+        /* Associate Section */
+        .associate-section {
+            margin: 0 20px 20px;
+        }
+        
+        .section-title {
+            font-size: 14px;
+            color: #95a5a6;
+            margin-bottom: 10px;
+            padding-left: 5px;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .associate-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            border: 1px solid #eee;
+            margin-bottom: 10px;
+        }
+
+        .associate-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--secondary-color);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 16px;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: auto;
+            padding: 20px;
+            text-align: center;
+            background: #fff;
+        }
+
+        .save-btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #2c5282 100%);
+            color: #fff;
+            border: none;
+            padding: 16px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            box-shadow: 0 10px 20px rgba(31, 58, 96, 0.2);
+            transition: transform 0.2s;
+        }
+
+        .save-btn:active {
+            transform: scale(0.98);
+        }
+
+        .save-btn i {
+            margin-right: 8px;
+        }
+
+        /* Share FAB */
+        .share-fab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            color: #fff;
+            border-radius: 50%;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+        
+        .share-fab:hover {
+            transform: scale(1.1);
+        }
+
+        /* Loading State */
+        #loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loading">
+        <i class="fas fa-circle-notch fa-spin fa-2x" style="color: #1F3A60;"></i>
+    </div>
+
+    <div class="container" id="vcard-container" style="display: none;">
+        <header class="header">
+            <div class="logo-container">
+                <img id="company-logo" src="/CAIndiaLogo.png" alt="Logo">
+            </div>
+            <div class="company-name" id="company-name"></div>
+            <div class="company-subtitle" id="company-subtitle"></div>
+        </header>
+
+        <div class="profile-info">
+            <h1 class="name" id="person-name"></h1>
+            <span class="designation" id="person-designation"></span>
+        </div>
+
+        <div class="actions" id="social-actions">
+            <!-- Actions will be injected here -->
+        </div>
+
+        <div class="details-card">
+            <div class="contact-item">
+                <div class="contact-icon"><i class="fas fa-phone-flip"></i></div>
+                <div class="contact-details">
+                    <h4>Mobile</h4>
+                    <a href="" id="phone-link"><span id="phone-display"></span></a>
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                <div class="contact-details">
+                    <h4>Email</h4>
+                    <a href="" id="email-link"><span id="email-display"></span></a>
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                <div class="contact-details">
+                    <h4>Office Address</h4>
+                    <p id="address-display"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="associate-section" id="associates-container">
+            <h3 class="section-title">Associates</h3>
+            <!-- Associates injected here -->
+        </div>
+
+        <footer class="footer">
+            <a href="#" class="save-btn" id="save-contact-btn">
+                <i class="fas fa-user-plus"></i> Add to Contacts
+            </a>
+        </footer>
+
+        <!-- Share Button -->
+        <button id="share-btn" class="share-fab">
+            <i class="fas fa-share-alt"></i>
+        </button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('data.json')
+                .then(response => response.json())
+                .then(data => {
+                    renderVCard(data);
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('vcard-container').style.display = 'flex';
+                })
+                .catch(error => {
+                    console.error('Error loading data:', error);
+                    document.getElementById('loading').innerHTML = '<p>Error loading profile data.</p>';
+                });
+        });
+
+        function renderVCard(data) {
+            const p = data.personalInfo;
+            
+            // Theme Colors
+            if (data.theme) {
+                document.documentElement.style.setProperty('--primary-color', data.theme.primaryColor);
+                document.documentElement.style.setProperty('--secondary-color', data.theme.secondaryColor);
+                document.documentElement.style.setProperty('--bg-color', data.theme.backgroundColor);
+            }
+
+            // Header Info
+            document.getElementById('company-name').textContent = p.company;
+            document.getElementById('company-subtitle').textContent = p.companySubtitle;
+            document.getElementById('person-name').textContent = p.name;
+            document.getElementById('person-designation').textContent = p.designation;
+            
+            // Logo
+            const logoImg = document.getElementById('company-logo');
+            if (p.logoUrl) {
+                logoImg.src = p.logoUrl;
+            } else {
+                logoImg.style.display = 'none';
+            }
+
+            // Contact Info
+            document.getElementById('phone-display').textContent = p.phone;
+            document.getElementById('phone-link').href = `tel:${p.phone.replace(/\s+/g, '')}`;
+            
+            document.getElementById('email-display').textContent = p.email;
+            document.getElementById('email-link').href = `mailto:${p.email}`;
+            
+            document.getElementById('address-display').textContent = p.address;
+
+            // Social Actions
+            const actionsContainer = document.getElementById('social-actions');
+            data.socialLinks.forEach(link => {
+                const btn = document.createElement('a');
+                btn.className = 'action-btn';
+                btn.href = link.url;
+                btn.target = '_blank';
+                btn.style.backgroundColor = link.color || data.theme.primaryColor;
+                btn.innerHTML = `<i class="${link.icon}"></i>`;
+                actionsContainer.appendChild(btn);
+            });
+
+            // Associates
+            const associatesContainer = document.getElementById('associates-container');
+            if (data.associates && data.associates.length > 0) {
+                data.associates.forEach(assoc => {
+                    const item = document.createElement('div');
+                    item.className = 'associate-card';
+                    item.innerHTML = `
+                        <div class="associate-avatar"><i class="fas fa-user"></i></div>
+                        <div class="contact-details">
+                            <h4>Associate</h4>
+                            <p style="font-weight: 600; margin-bottom: 2px;">${assoc.name}</p>
+                            <a href="tel:${assoc.phone.replace(/\s+/g, '')}" style="color: var(--secondary-color); font-size: 13px;">${assoc.phone}</a>
+                        </div>
+                    `;
+                    associatesContainer.appendChild(item);
+                });
+            } else {
+                associatesContainer.style.display = 'none';
+            }
+
+            // VCF Generation
+            const vcardData = `BEGIN:VCARD
+VERSION:3.0
+N:Ginoya;Krish;;CA;
+FN:${p.name}
+ORG:${p.company}
+TITLE:${p.designation}
+TEL;TYPE=WORK,VOICE:${p.phone}
+EMAIL:${p.email}
+ADR;TYPE=WORK:;;${p.address.replace(/,/g, ';')};;;;
+URL:${p.website || ''}
+END:VCARD`;
+
+            const blob = new Blob([vcardData], { type: 'text/vcard' });
+            const url = URL.createObjectURL(blob);
+            const saveBtn = document.getElementById('save-contact-btn');
+            saveBtn.href = url;
+            saveBtn.download = 'contact.vcf';
+
+            // Share Button Logic
+            const shareBtn = document.getElementById('share-btn');
+            shareBtn.onclick = () => {
+                if (navigator.share) {
+                    navigator.share({
+                        title: document.title,
+                        text: 'Check out this digital business card.',
+                        url: window.location.href
+                    }).catch(console.error);
+                } else {
+                    prompt('Copy this link to share:', window.location.href);
+                }
+            };
+        }
+    </script>
+</body>
+</html>
