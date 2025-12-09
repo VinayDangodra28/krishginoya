@@ -351,6 +351,101 @@
             align-items: center;
             z-index: 1000;
         }
+
+        /* Modal */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 2000; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            background-color: rgba(0,0,0,0.5); 
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 25px 20px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 320px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            position: relative;
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            from {transform: scale(0.8); opacity: 0;}
+            to {transform: scale(1); opacity: 1;}
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: #999;
+            font-size: 24px;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .call-option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            text-decoration: none;
+            color: var(--text-color);
+            border: 1px solid #eee;
+            transition: all 0.2s;
+        }
+
+        .call-option:active {
+            background: #e9ecef;
+            transform: scale(0.98);
+        }
+
+        .call-info {
+            text-align: left;
+        }
+
+        .call-name {
+            font-weight: 600;
+            font-size: 15px;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .call-number {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .call-icon {
+            width: 35px;
+            height: 35px;
+            background: rgba(124, 179, 66, 0.1);
+            color: var(--secondary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
@@ -377,6 +472,11 @@
             <!-- Actions will be injected here -->
         </div>
 
+        <div class="associate-section" id="associates-container">
+            <h3 class="section-title">Associates</h3>
+            <!-- Associates injected here -->
+        </div>
+
         <div class="services-section" id="services-container" style="display: none;">
             <h3 class="section-title">Our Services</h3>
             <ul class="service-list" id="service-list">
@@ -390,7 +490,7 @@
                 <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
                 <div class="contact-details">
                     <h4>Mobile</h4>
-                    <a href="" id="phone-link"><span id="phone-display"></span></a>
+                    <div id="phone-list"></div>
                 </div>
             </div>
 
@@ -426,6 +526,17 @@
         <button id="share-btn" class="share-fab">
             <i class="fas fa-share-alt"></i>
         </button>
+
+        <!-- Call Modal -->
+        <div id="call-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" id="close-modal">&times;</span>
+                <h3 class="modal-title">Call</h3>
+                <div id="call-options">
+                    <!-- Options injected here -->
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -467,9 +578,28 @@
                 logoImg.style.display = 'none';
             }
 
-            // Contact Info
-            document.getElementById('phone-display').textContent = p.phone;
-            document.getElementById('phone-link').href = `tel:${p.phone.replace(/\s+/g, '')}`;
+            // Contact Info - Phone List
+            const phoneList = document.getElementById('phone-list');
+            phoneList.innerHTML = ''; // Clear existing
+            
+            // Add Krish
+            const pLink = document.createElement('a');
+            pLink.href = `tel:${p.phone.replace(/\s+/g, '')}`;
+            pLink.style.display = 'block';
+            pLink.style.marginBottom = '5px';
+            pLink.innerHTML = `${p.phone} <span style="font-size: 12px; color: #999;">(Krish)</span>`;
+            phoneList.appendChild(pLink);
+
+            // Add Associates to Phone List
+            if (data.associates) {
+                data.associates.forEach(assoc => {
+                    const aLink = document.createElement('a');
+                    aLink.href = `tel:${assoc.phone.replace(/\s+/g, '')}`;
+                    aLink.style.display = 'block';
+                    aLink.innerHTML = `${assoc.phone} <span style="font-size: 12px; color: #999;">(${assoc.name.split(' ')[0]})</span>`;
+                    phoneList.appendChild(aLink);
+                });
+            }
             
             document.getElementById('email-display').textContent = p.email;
             document.getElementById('email-link').href = `mailto:${p.email}`;
@@ -481,8 +611,18 @@
             data.socialLinks.forEach(link => {
                 const btn = document.createElement('a');
                 btn.className = 'action-btn';
-                btn.href = link.url;
-                btn.target = '_blank';
+                
+                if (link.platform === 'Call') {
+                    btn.href = '#';
+                    btn.onclick = (e) => {
+                        e.preventDefault();
+                        openCallModal(data);
+                    };
+                } else {
+                    btn.href = link.url;
+                    btn.target = '_blank';
+                }
+                
                 btn.style.backgroundColor = link.color || data.theme.primaryColor;
                 btn.innerHTML = `<i class="${link.icon}"></i>`;
                 actionsContainer.appendChild(btn);
@@ -530,14 +670,23 @@
             }
 
             // VCF Generation
-            const vcardData = `BEGIN:VCARD
+            let vcardData = `BEGIN:VCARD
 VERSION:3.0
 N:Ginoya;Krish;;CA;
 FN:${p.name}
 ORG:${p.company}
 TITLE:${p.designation}
 TEL;TYPE=WORK,VOICE:${p.phone}
-EMAIL:${p.email}
+`;
+
+            // Add Associates to VCF
+            if (data.associates) {
+                data.associates.forEach(assoc => {
+                    vcardData += `TEL;TYPE=WORK,VOICE;X-LABEL=${assoc.name}:${assoc.phone}\n`;
+                });
+            }
+
+            vcardData += `EMAIL:${p.email}
 ADR;TYPE=WORK:;;${p.address.replace(/,/g, ';')};;;;
 URL:${p.website || ''}
 END:VCARD`;
@@ -561,6 +710,54 @@ END:VCARD`;
                     prompt('Copy this link to share:', window.location.href);
                 }
             };
+
+            // Modal Logic
+            const modal = document.getElementById('call-modal');
+            const closeBtn = document.getElementById('close-modal');
+            
+            closeBtn.onclick = () => {
+                modal.style.display = 'none';
+            }
+            
+            window.onclick = (event) => {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            }
+        }
+
+        function openCallModal(data) {
+            const modal = document.getElementById('call-modal');
+            const optionsContainer = document.getElementById('call-options');
+            optionsContainer.innerHTML = '';
+
+            // Add Krish
+            addCallOption(optionsContainer, data.personalInfo.name, data.personalInfo.phone);
+
+            // Add Associates
+            if (data.associates) {
+                data.associates.forEach(assoc => {
+                    addCallOption(optionsContainer, assoc.name, assoc.phone);
+                });
+            }
+
+            modal.style.display = 'flex';
+        }
+
+        function addCallOption(container, name, phone) {
+            const a = document.createElement('a');
+            a.className = 'call-option';
+            a.href = `tel:${phone.replace(/\s+/g, '')}`;
+            a.innerHTML = `
+                <div class="call-info">
+                    <span class="call-name">${name}</span>
+                    <span class="call-number">${phone}</span>
+                </div>
+                <div class="call-icon">
+                    <i class="fas fa-phone"></i>
+                </div>
+            `;
+            container.appendChild(a);
         }
     </script>
 </body>
